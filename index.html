@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A very serious website for saying hi to Donnie Gardner the 3rd.">
 <title>Hi Donnie! 🎉</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,6 +13,7 @@
     --card: rgba(255, 255, 255, 0.07);
     --accent: #ffd86b;
     --accent2: #ff6b9d;
+    --accent3: #7df9ff;
     --text: #fdfdff;
   }
 
@@ -25,6 +27,7 @@
     overflow-x: hidden;
   }
 
+  /* ---- Starfield ---- */
   .stars {
     position: fixed;
     inset: 0;
@@ -74,7 +77,7 @@
     font-size: clamp(2.6rem, 9vw, 4.8rem);
     line-height: 1.05;
     margin: 16px 0 8px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), #7df9ff, var(--accent));
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
     background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -128,9 +131,10 @@
     margin-right: 8px;
   }
 
-  /* The big button */
+  /* ---- The big button ---- */
   .hi-zone {
     margin: 48px 0;
+    position: relative;
   }
 
   #hiButton {
@@ -145,6 +149,7 @@
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     box-shadow: 0 8px 32px rgba(255, 216, 107, 0.4);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
   }
 
   #hiButton:hover {
@@ -154,6 +159,42 @@
 
   #hiButton:active {
     transform: scale(0.96);
+  }
+
+  /* ---- Hi-o-meter ---- */
+  .meter-wrap {
+    max-width: 420px;
+    margin: 22px auto 0;
+  }
+
+  .meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 6px;
+  }
+
+  .meter {
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    background-size: 200% 100%;
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: meterShine 3s linear infinite;
+  }
+
+  @keyframes meterShine {
+    to { background-position: -200% 0; }
   }
 
   #counter {
@@ -168,10 +209,29 @@
     font-size: 1.3rem;
   }
 
-  /* Confetti */
+  /* ---- Sound toggle ---- */
+  .sound-toggle {
+    margin-top: 20px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sound-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---- Confetti ---- */
   .confetti {
     position: fixed;
-    top: -12px;
+    top: -16px;
     width: 10px;
     height: 14px;
     z-index: 50;
@@ -181,6 +241,60 @@
 
   @keyframes fall {
     to { transform: translateY(110vh) rotate(720deg); opacity: 0.3; }
+  }
+
+  /* ---- Floating hi particles (rise from the button) ---- */
+  .float-hi {
+    position: fixed;
+    z-index: 60;
+    pointer-events: none;
+    font-weight: 800;
+    animation: floatUp 1.4s ease-out forwards;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes floatUp {
+    from { opacity: 1; transform: translate(-50%, 0) scale(0.6) rotate(var(--rot)); }
+    to   { opacity: 0; transform: translate(calc(-50% + var(--drift)), -140px) scale(1.3) rotate(var(--rot)); }
+  }
+
+  /* ---- Cursor sparkle ---- */
+  .sparkle {
+    position: fixed;
+    z-index: 55;
+    pointer-events: none;
+    font-size: 12px;
+    animation: sparkleFade 0.7s ease-out forwards;
+  }
+
+  @keyframes sparkleFade {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to   { opacity: 0; transform: translate(-50%, calc(-50% - 24px)) scale(0.3) rotate(90deg); }
+  }
+
+  /* ---- Milestone banner ---- */
+  #milestone {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-140%);
+    z-index: 100;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #1a1a2e;
+    font-weight: 800;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    padding: 14px 32px;
+    border-radius: 999px;
+    box-shadow: 0 12px 48px rgba(255, 107, 157, 0.5);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    max-width: 92vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #milestone.show {
+    transform: translateX(-50%) translateY(0);
   }
 
   .facts {
@@ -226,11 +340,19 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* ---- Reduced motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .star, .wave, h1, .meter-fill { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
 </style>
 </head>
 <body>
 
 <div class="stars" id="stars"></div>
+<div id="milestone" role="status" aria-live="polite"></div>
 
 <main>
   <section class="hero">
@@ -240,8 +362,18 @@
   </section>
 
   <div class="hi-zone reveal">
-    <button id="hiButton">Say Hi to Donnie</button>
-    <div id="counter"></div>
+    <button id="hiButton" aria-describedby="counter">Say Hi to Donnie</button>
+    <div class="meter-wrap">
+      <div class="meter-label">
+        <span>Hi-o-meter</span>
+        <span id="meterPct">0%</span>
+      </div>
+      <div class="meter" role="progressbar" aria-label="Hi-o-meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meterBar">
+        <div class="meter-fill" id="meterFill"></div>
+      </div>
+    </div>
+    <div id="counter" aria-live="polite"></div>
+    <button class="sound-toggle" id="soundToggle" aria-pressed="true">🔊 Sound on</button>
   </div>
 
   <div class="card reveal">
@@ -291,7 +423,9 @@
 </main>
 
 <script>
-  // Stars
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Stars ----
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 90; i++) {
     const s = document.createElement('div');
@@ -306,16 +440,76 @@
     starsEl.appendChild(s);
   }
 
-  // Scroll reveal
+  // ---- Scroll reveal ----
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Say hi button + confetti
+  // ---- Sound (tiny synth, no assets) ----
+  let audioCtx = null;
+  let soundOn = true;
+
+  function ensureAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playPop(pitchBoost = 0) {
+    if (!soundOn || !audioCtx) return;
+    const t = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(380 + pitchBoost, t);
+    osc.frequency.exponentialRampToValueAtTime(760 + pitchBoost * 2, t + 0.12);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.15, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + 0.3);
+  }
+
+  function playFanfare() {
+    if (!soundOn || !audioCtx) return;
+    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
+    notes.forEach((f, i) => {
+      const t = audioCtx.currentTime + i * 0.12;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f, t);
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.18, t + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.5);
+    });
+  }
+
+  const soundToggle = document.getElementById('soundToggle');
+  soundToggle.addEventListener('click', () => {
+    soundOn = !soundOn;
+    if (soundOn) ensureAudio();
+    soundToggle.textContent = soundOn ? '🔊 Sound on' : '🔇 Sound off';
+    soundToggle.setAttribute('aria-pressed', String(soundOn));
+  });
+
+  // ---- Say hi button + confetti ----
   const btn = document.getElementById('hiButton');
   const counterEl = document.getElementById('counter');
+  const meterFill = document.getElementById('meterFill');
+  const meterBar = document.getElementById('meterBar');
+  const meterPct = document.getElementById('meterPct');
+  const milestoneEl = document.getElementById('milestone');
+
   let count = parseInt(localStorage.getItem('donnieHiCount') || '0', 10);
+  let lastMilestone = parseInt(localStorage.getItem('donnieLastMilestone') || '0', 10);
 
   const messages = [
     'HI, DONNIE! 👋',
@@ -327,9 +521,23 @@
     'SOMEONE OUT THERE IS PROUD OF YOU! 🚀'
   ];
 
-  function confettiBurst() {
-    const colors = ['#ffd86b', '#ff6b9d', '#7df9ff', '#a0f0a0', '#c39bff'];
-    for (let i = 0; i < 40; i++) {
+  const milestones = {
+    1:   'First hi! The dynasty is acknowledged. 👑',
+    5:   'Five strong! Donnie is officially said-hi-to\'d. 💛',
+    10:  'Ten! This button is developing feelings. 🥁',
+    25:  'Twenty-five! The Hi-o-meter is getting warm. 🔥',
+    50:  'FIFTY! Donnie III, you magnificent human. 🚀',
+    100: 'ONE HUNDRED HI\'S! A certified hi-legend! 🏆',
+    250: '250!! History is being made. Right here. 👑',
+    500: '500 HI\'S. The button requests a medal and a nap. 🎖️',
+    1000:'ONE THOUSAND. Donnie, this page loves you unreasonably. 💛'
+  };
+
+  const colors = ['#ffd86b', '#ff6b9d', '#7df9ff', '#a0f0a0', '#c39bff'];
+
+  function confettiBurst(n = 40) {
+    if (reduceMotion) return;
+    for (let i = 0; i < n; i++) {
       const c = document.createElement('div');
       c.className = 'confetti';
       c.style.left = Math.random() * 100 + 'vw';
@@ -341,19 +549,94 @@
     }
   }
 
+  function floatHi(x, y) {
+    if (reduceMotion) return;
+    const bits = ['HI!', '👋', '💛', '🎉', 'HEY!'];
+    const el = document.createElement('div');
+    el.className = 'float-hi';
+    el.textContent = bits[Math.floor(Math.random() * bits.length)];
+    el.style.left = x + (Math.random() * 60 - 30) + 'px';
+    el.style.top = y + 'px';
+    el.style.fontSize = (Math.random() * 14 + 16) + 'px';
+    el.style.color = colors[Math.floor(Math.random() * colors.length)];
+    el.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+    el.style.setProperty('--rot', (Math.random() * 40 - 20) + 'deg');
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+
+  let milestoneTimer = null;
+  function showMilestone(text) {
+    milestoneEl.textContent = text;
+    milestoneEl.classList.add('show');
+    clearTimeout(milestoneTimer);
+    milestoneTimer = setTimeout(() => milestoneEl.classList.remove('show'), 3500);
+  }
+
+  function updateMeter() {
+    const next = Object.keys(milestones).map(Number).find(m => m > count) || count;
+    const prev = Math.max(0, next - 100);
+    const pct = Math.min(100, Math.round(((count - prev) / (next - prev)) * 100));
+    meterFill.style.width = pct + '%';
+    meterPct.textContent = pct + '%';
+    meterBar.setAttribute('aria-valuenow', String(pct));
+  }
+
   function renderCounter() {
     counterEl.innerHTML = count === 0
       ? 'Click the button to start the hi-count.'
       : `Hi's sent: <strong>${count}</strong>`;
+    updateMeter();
   }
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    ensureAudio();
     count++;
     localStorage.setItem('donnieHiCount', String(count));
-    counterEl.textContent = messages[Math.floor(Math.random() * messages.length)];
-    setTimeout(renderCounter, 1800);
-    confettiBurst();
+
+    // Milestone?
+    if (milestones[count] && count > lastMilestone) {
+      lastMilestone = count;
+      localStorage.setItem('donnieLastMilestone', String(count));
+      showMilestone(milestones[count]);
+      confettiBurst(120);
+      playFanfare();
+    } else {
+      counterEl.textContent = messages[Math.floor(Math.random() * messages.length)];
+      setTimeout(renderCounter, 1800);
+      confettiBurst(40);
+      playPop(count % 5 === 0 ? 200 : 0);
+    }
+
+    renderCounter();
+
+    // Floating hi's from the click point
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX || rect.left + rect.width / 2;
+    const y = e.clientY || rect.top;
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => floatHi(x, y - 10), i * 90);
+    }
   });
+
+  // ---- Cursor sparkle trail (throttled) ----
+  if (!reduceMotion && matchMedia('(pointer: fine)').matches) {
+    let lastSparkle = 0;
+    const sparkles = ['✨', '⭐', '💛'];
+    window.addEventListener('pointermove', (e) => {
+      const now = performance.now();
+      if (now - lastSparkle < 90) return;
+      lastSparkle = now;
+      if (Math.random() > 0.5) return;
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+      s.style.left = e.clientX + 'px';
+      s.style.top = e.clientY + 'px';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 700);
+    });
+  }
 
   renderCounter();
 </script>
