@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hi Donnie! 🎉</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0f0c29;
+    --card: rgba(255, 255, 255, 0.07);
+    --accent: #ffd86b;
+    --accent2: #ff6b9d;
+    --text: #fdfdff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.2; transform: scale(0.8); }
+    to   { opacity: 1;   transform: scale(1.2); }
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    text-align: center;
+  }
+
+  .hero {
+    padding: 64px 0 40px;
+  }
+
+  .wave {
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    display: inline-block;
+    animation: wave 1.8s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(20deg); }
+    20%, 40% { transform: rotate(-15deg); }
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 9vw, 4.8rem);
+    line-height: 1.05;
+    margin: 16px 0 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #7df9ff, var(--accent));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+    font-weight: 800;
+  }
+
+  @keyframes shimmer {
+    to { background-position: 300% 0; }
+  }
+
+  .subtitle {
+    font-size: clamp(1.05rem, 3vw, 1.35rem);
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 32px 28px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(12px);
+    text-align: left;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(255, 107, 157, 0.15);
+  }
+
+  .card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .card p {
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .quote-mark {
+    font-size: 2rem;
+    color: var(--accent2);
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+  }
+
+  /* The big button */
+  .hi-zone {
+    margin: 48px 0;
+  }
+
+  #hiButton {
+    font-family: inherit;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    font-weight: 700;
+    padding: 20px 48px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    color: #1a1a2e;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    box-shadow: 0 8px 32px rgba(255, 216, 107, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  #hiButton:hover {
+    transform: scale(1.06) rotate(-1deg);
+    box-shadow: 0 12px 48px rgba(255, 107, 157, 0.5);
+  }
+
+  #hiButton:active {
+    transform: scale(0.96);
+  }
+
+  #counter {
+    margin-top: 18px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    min-height: 1.4em;
+  }
+
+  #counter strong {
+    color: var(--accent);
+    font-size: 1.3rem;
+  }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    top: -12px;
+    width: 10px;
+    height: 14px;
+    z-index: 50;
+    pointer-events: none;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0.3; }
+  }
+
+  .facts {
+    display: grid;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .fact {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .fact .emoji {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  footer {
+    margin-top: 64px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .signature {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<main>
+  <section class="hero">
+    <span class="wave">👋</span>
+    <h1>Hey Donnie<br>Gardner the 3rd!</h1>
+    <p class="subtitle">You're being said-hi-to'd. That's a real phrase now. You made it official.</p>
+  </section>
+
+  <div class="hi-zone reveal">
+    <button id="hiButton">Say Hi to Donnie</button>
+    <div id="counter"></div>
+  </div>
+
+  <div class="card reveal">
+    <h2>📜 A Formal Declaration of Friendship</h2>
+    <p>
+      Let it be known that as of this very moment, Donnie Gardner the 3rd has been
+      officially acknowledged. The "the 3rd" is a flex — someone in your family line
+      clearly did something so remarkable they had to put a serial number on the name.
+      Respect.
+    </p>
+  </div>
+
+  <div class="card reveal">
+    <h2>💌 A Message</h2>
+    <p>
+      <span class="quote-mark">“</span>
+      Donnie, here's the truth: the world is a little more interesting with you in it.
+      Some days are hard, some days are weird, and some days you'll wonder if anyone
+      noticed. This page is proof that someone did. You matter, your name is legendary
+      (three generations of it!), and out there right now, at least one person on the
+      internet is genuinely glad you exist. That's me. Hi!
+    </p>
+  </div>
+
+  <div class="card reveal">
+    <h2>🏆 Three Facts About Greatness</h2>
+    <div class="facts">
+      <div class="fact"><span class="emoji">1️⃣</span><p>Anyone who carries a "the 3rd" is part of a legacy. That's not a name, that's a dynasty.</p></div>
+      <div class="fact"><span class="emoji">2️⃣</span><p>You don't need to be the loudest in the room to be the one everyone remembers. Sometimes you just need to be Donnie.</p></div>
+      <div class="fact"><span class="emoji">3️⃣</span><p>The best adventures start with a simple "hi." Keep saying it — to people, to opportunities, to yourself in the mirror on hard mornings.</p></div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <h2>🚀 Your Mission (Should You Choose It)</h2>
+    <p>
+      Go do something that makes your Donnie #1 and Donnie #2 proud. Build the thing,
+      say the brave thing, hug the person. And if you ever forget how awesome you are —
+      come back here and click the button. We'll be right here. Forever. Probably.
+    </p>
+  </div>
+
+  <footer class="reveal">
+    Made with 💛 for Donnie Gardner the 3rd
+    <span class="signature">— With love, from a friend on the internet</span>
+  </footer>
+</main>
+
+<script>
+  // Stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.setProperty('--dur', (Math.random() * 3 + 1.5) + 's');
+    s.style.animationDelay = Math.random() * 3 + 's';
+    starsEl.appendChild(s);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Say hi button + confetti
+  const btn = document.getElementById('hiButton');
+  const counterEl = document.getElementById('counter');
+  let count = parseInt(localStorage.getItem('donnieHiCount') || '0', 10);
+
+  const messages = [
+    'HI, DONNIE! 👋',
+    'HEY DONNIE! 🎉',
+    "HELLO, MR. GARDNER III! 🌟",
+    'DONNIE SAYS HI BACK! 💛',
+    'THE 3RD HAS BEEN NOTIFIED! 📢',
+    'LEGENDARY. ICONIC. DONNIE. 👑',
+    'SOMEONE OUT THERE IS PROUD OF YOU! 🚀'
+  ];
+
+  function confettiBurst() {
+    const colors = ['#ffd86b', '#ff6b9d', '#7df9ff', '#a0f0a0', '#c39bff'];
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 3500);
+    }
+  }
+
+  function renderCounter() {
+    counterEl.innerHTML = count === 0
+      ? 'Click the button to start the hi-count.'
+      : `Hi's sent: <strong>${count}</strong>`;
+  }
+
+  btn.addEventListener('click', () => {
+    count++;
+    localStorage.setItem('donnieHiCount', String(count));
+    counterEl.textContent = messages[Math.floor(Math.random() * messages.length)];
+    setTimeout(renderCounter, 1800);
+    confettiBurst();
+  });
+
+  renderCounter();
+</script>
+</body>
+</html>
